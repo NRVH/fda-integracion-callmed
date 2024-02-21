@@ -63,7 +63,10 @@ public class CallmedResources {
     @Path("/test")
     @Operation(summary = "Verifica la disponibilidad del servicio",
             description = "Devuelve un mensaje que indica que el servicio está disponible")
-    public String test() {
-        return "fda integracion callmed version 1.0.0 is available!";
+    public Response test() {
+        return Response.status(Response.Status.OK).entity(new ErrorResponse(
+                true,
+                200,
+                "fda integracion callmed version 1.0.0 is available!")).build();
     }
 }

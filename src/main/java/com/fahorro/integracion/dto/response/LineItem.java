@@ -2,7 +2,7 @@ package com.fahorro.integracion.dto.response;
 
 public class LineItem {
     private String EAN;
-    private Medicamento medicamento;
+    private String medicamento;
     private String estatus;
     private String division;
     private String categoria;
@@ -30,20 +30,20 @@ public class LineItem {
     private String razonParaNoSurtir;
     private String numeroAutorizacion;
 
+    public String getMedicamento() {
+        return medicamento;
+    }
+
+    public void setMedicamento(String medicamento) {
+        this.medicamento = medicamento;
+    }
+
     public String getEAN() {
         return EAN;
     }
 
     public void setEAN(String EAN) {
         this.EAN = EAN;
-    }
-
-    public Medicamento getMedicamento() {
-        return medicamento;
-    }
-
-    public void setMedicamento(Medicamento medicamento) {
-        this.medicamento = medicamento;
     }
 
     public String getEstatus() {

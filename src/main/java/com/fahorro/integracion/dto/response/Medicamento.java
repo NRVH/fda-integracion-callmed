@@ -36,9 +36,6 @@ public class Medicamento {
     @JsonbProperty("Status")
     private String status;
 
-    public Medicamento() {
-    }
-
     public String getCantidad() {
         return cantidad;
     }
