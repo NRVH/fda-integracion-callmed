@@ -53,7 +53,7 @@ public class CallmedService
         }
         catch (Exception e)
         {
-            throw new CallmedException("Error al serializar a JSON " + RootReceta.class.getSimpleName(), 500, e);
+            throw new CallmedException("Error al serializar a JSON " + RecetaGeneral.class.getSimpleName(), 500, e);
         }
     }
 
