@@ -68,7 +68,7 @@ public class CallmedService
             clienteJson.put(TOKEN, tokenResponse.replace("\"", ""));
 
             String clienteResponse = callmedClient.claveCliente(clienteJson.toString());
-            ClaveCliente claveCliente = helperCallmed.fromJson(clienteResponse, ClaveCliente.class);
+            ClaveCliente claveCliente = objectMapper.readValue(clienteResponse, ClaveCliente.class);
 
 
             if (!claveCliente.isSuccess()) {
@@ -102,7 +102,7 @@ public class CallmedService
             recetaJson.put(TOKEN, data.getToken());
 
             String clienteResponse = callmedClient.valReceta(recetaJson.toString());
-            RootReceta rootReceta =  helperCallmed.fromJson(clienteResponse, RootReceta.class);
+            RootReceta rootReceta =  objectMapper.readValue(clienteResponse, RootReceta.class);
 
             if (!rootReceta.isSuccess()) {
                 String message = rootReceta.getMessage() + SEPARATOR + NUR + data.getNur();
@@ -135,7 +135,7 @@ public class CallmedService
             medicamentosJson.put(TOKEN, data.getToken());
 
             String clienteResponse = callmedClient.valMedicamento(medicamentosJson.toString());
-            MedicamentosApi medicamentosApi =  helperCallmed.fromJson(clienteResponse, MedicamentosApi.class);
+            MedicamentosApi medicamentosApi =  objectMapper.readValue(clienteResponse, MedicamentosApi.class);
 
             if (!medicamentosApi.isSuccess()) {
                 String message = medicamentosApi.getMessage() + SEPARATOR + NUR + data.getNur();

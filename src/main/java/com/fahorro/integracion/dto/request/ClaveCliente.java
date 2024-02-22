@@ -1,21 +1,22 @@
 package com.fahorro.integracion.dto.request;
 
-import jakarta.json.bind.annotation.JsonbProperty;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ClaveCliente {
-    @JsonbProperty("Success")
+    @JsonProperty("Success")
     private boolean success;
 
-    @JsonbProperty("Code")
+    @JsonProperty("Code")
     private String code;
 
-    @JsonbProperty("Message")
+    @JsonProperty("Message")
     private String message;
 
-    @JsonbProperty("ClaveCliente")
+    @JsonProperty("ClaveCliente")
     private String claveCliente;
 
-    @JsonbProperty("Subcliente")
+    @JsonProperty("Subcliente")
     private String subcliente;
 
     public boolean isSuccess() {

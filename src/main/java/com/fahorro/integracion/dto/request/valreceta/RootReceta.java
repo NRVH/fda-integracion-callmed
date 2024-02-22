@@ -1,27 +1,27 @@
 package com.fahorro.integracion.dto.request.valreceta;
 
-import jakarta.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RootReceta {
-    @JsonbProperty("Success")
+    @JsonProperty("Success")
     private boolean success;
 
-    @JsonbProperty("Code")
+    @JsonProperty("Code")
     private String code;
 
-    @JsonbProperty("Message")
+    @JsonProperty("Message")
     private String message;
 
-    @JsonbProperty("Medicamento")
+    @JsonProperty("Medicamento")
     private Object medicamento;
 
-    @JsonbProperty("Receta")
+    @JsonProperty("Receta")
     private Receta receta;
 
-    @JsonbProperty("Direcciones")
+    @JsonProperty("Direcciones")
     private Object direcciones;
 
-    @JsonbProperty("DireccionID")
+    @JsonProperty("DireccionID")
     private Object direccionID;
 
     public boolean isSuccess() {

@@ -1,39 +1,39 @@
 package com.fahorro.integracion.dto.response;
 
-import jakarta.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Medicamento {
-    @JsonbProperty("Cantidad")
+    @JsonProperty("Cantidad")
     private String cantidad;
 
-    @JsonbProperty("EAN")
+    @JsonProperty("EAN")
     private String ean;
 
-    @JsonbProperty("EANEquivalente")
+    @JsonProperty("EANEquivalente")
     private String eanEquivalente;
 
-    @JsonbProperty("FechaConsulta")
+    @JsonProperty("FechaConsulta")
     private String fechaConsulta;
 
-    @JsonbProperty("Folio")
+    @JsonProperty("Folio")
     private String folio;
 
-    @JsonbProperty("ICD10")
+    @JsonProperty("ICD10")
     private String icd10;
 
-    @JsonbProperty("Indicaciones")
+    @JsonProperty("Indicaciones")
     private String indicaciones;
 
-    @JsonbProperty("Medicamento")
+    @JsonProperty("Medicamento")
     private String medicamento;
 
-    @JsonbProperty("NUR")
+    @JsonProperty("NUR")
     private String nur;
 
-    @JsonbProperty("PacienteName")
+    @JsonProperty("PacienteName")
     private String pacienteName;
 
-    @JsonbProperty("Status")
+    @JsonProperty("Status")
     private String status;
 
     public String getCantidad() {

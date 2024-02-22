@@ -1,54 +1,54 @@
 package com.fahorro.integracion.dto.request.valreceta;
 
-import jakarta.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Receta {
-    @JsonbProperty("Autorizacion")
+    @JsonProperty("Autorizacion")
     private String autorizacion;
 
-    @JsonbProperty("Folio")
+    @JsonProperty("Folio")
     private String folio;
 
-    @JsonbProperty("NUR")
+    @JsonProperty("NUR")
     private String nur;
 
-    @JsonbProperty("FechaConsulta")
+    @JsonProperty("FechaConsulta")
     private String fechaConsulta;
 
-    @JsonbProperty("NombreMedico")
+    @JsonProperty("NombreMedico")
     private String nombreMedico;
 
-    @JsonbProperty("ClaveMedico")
+    @JsonProperty("ClaveMedico")
     private String claveMedico;
 
-    @JsonbProperty("ConsultorioID")
+    @JsonProperty("ConsultorioID")
     private String consultorioID;
 
-    @JsonbProperty("ConsultorioNombre")
+    @JsonProperty("ConsultorioNombre")
     private String consultorioNombre;
 
-    @JsonbProperty("FolioConsultorio")
+    @JsonProperty("FolioConsultorio")
     private String folioConsultorio;
 
-    @JsonbProperty("DoctorEspecialidad")
+    @JsonProperty("DoctorEspecialidad")
     private String doctorEspecialidad;
 
-    @JsonbProperty("NombrePaciente")
+    @JsonProperty("NombrePaciente")
     private String nombrePaciente;
 
-    @JsonbProperty("ClavePaciente")
+    @JsonProperty("ClavePaciente")
     private String clavePaciente;
 
-    @JsonbProperty("Familiar")
+    @JsonProperty("Familiar")
     private String familiar;
 
-    @JsonbProperty("EdadPaciente")
+    @JsonProperty("EdadPaciente")
     private String edadPaciente;
 
-    @JsonbProperty("SexoPaciente")
+    @JsonProperty("SexoPaciente")
     private String sexoPaciente;
 
-    @JsonbProperty("Status")
+    @JsonProperty("Status")
     private String status;
 
     public String getAutorizacion() {

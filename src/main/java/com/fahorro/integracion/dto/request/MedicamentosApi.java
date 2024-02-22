@@ -1,28 +1,28 @@
 package com.fahorro.integracion.dto.request;
 
 import com.fahorro.integracion.dto.response.Medicamento;
-import jakarta.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MedicamentosApi {
-    @JsonbProperty("Success")
+    @JsonProperty("Success")
     private boolean success;
 
-    @JsonbProperty("Code")
+    @JsonProperty("Code")
     private String code;
 
-    @JsonbProperty("Message")
+    @JsonProperty("Message")
     private String message;
 
-    @JsonbProperty("Medicamento")
+    @JsonProperty("Medicamento")
     private Medicamento medicamento;
 
-    @JsonbProperty("Receta")
+    @JsonProperty("Receta")
     private Object receta;
 
-    @JsonbProperty("Direcciones")
+    @JsonProperty("Direcciones")
     private Object direcciones;
 
-    @JsonbProperty("DireccionID")
+    @JsonProperty("DireccionID")
     private Object direccionID;
 
     public boolean isSuccess() {

@@ -7,8 +7,6 @@ import com.fahorro.integracion.dto.response.Medicamento;
 import com.fahorro.integracion.dto.response.RecetaGeneral;
 import com.fahorro.integracion.exception.CallmedException;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.json.bind.Jsonb;
-import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
@@ -60,14 +58,6 @@ public class CalmedServiceHelper
         recetaGeneral.setLineItem(lineItemList);
 
         return recetaGeneral;
-    }
-
-    public <T> T fromJson(String json, Class<T> type) throws CallmedException {
-        try (Jsonb jsonb = JsonbBuilder.create()) {
-            return jsonb.fromJson(json, type);
-        } catch (Exception e) {
-            throw new CallmedException("Error al deserializar JSON a " + type.getSimpleName(), 500, e);
-        }
     }
 
     public void handleException(String nur, Exception e) throws CallmedException {
