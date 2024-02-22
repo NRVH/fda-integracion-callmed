@@ -46,10 +46,15 @@ public class CalmedServiceHelper
 
         lineItem.setEAN(med.getEan().trim());
         lineItem.setMedicamento(med.getMedicamento());
+        lineItem.setEstatus(med.getStatus().trim());
+        lineItem.setControlado(false);
+        lineItem.setAntibiotico(false);
         lineItem.setCantidad(med.getCantidad().trim());
         lineItem.setIndicaciones(med.getIndicaciones().trim());
         lineItem.setNur(data.getMedicamentos().getMedicamento().getNur().trim());
+        lineItem.setSePuedeSurtir(true);
         lineItem.setNumeroAutorizacion(data.getRootReceta().getReceta().getAutorizacion().trim());
+
 
         lineItemList.add(lineItem);
         recetaGeneral.setLineItem(lineItemList);
