@@ -23,7 +23,7 @@ public class RecetaGeneral {
     private String numeroPaciente;
     private String paciente;
     private String proveedorReceta;
-    private String razonNoSurtir;
+    private Boolean razonNoSurtir;
     private Boolean sePuedeSurtir;
     private String copago;
     private Integer copiaTantos;
@@ -200,11 +200,11 @@ public class RecetaGeneral {
         this.proveedorReceta = proveedorReceta;
     }
 
-    public String getRazonNoSurtir() {
+    public Boolean getRazonNoSurtir() {
         return razonNoSurtir;
     }
 
-    public void setRazonNoSurtir(String razonNoSurtir) {
+    public void setRazonNoSurtir(Boolean razonNoSurtir) {
         this.razonNoSurtir = razonNoSurtir;
     }
 

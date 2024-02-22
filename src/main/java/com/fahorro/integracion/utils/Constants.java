@@ -1,4 +1,4 @@
-package com.fahorro.integracion.util;
+package com.fahorro.integracion.utils;
 
 
 public class Constants

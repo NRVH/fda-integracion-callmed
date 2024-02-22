@@ -16,12 +16,12 @@ import org.jboss.logging.Logger;
 @Path("/callmed/api/v1")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class CallmedResources {
+public class CallmedResource {
 
-    private static final Logger log = Logger.getLogger(CallmedResources.class);
+    private static final Logger log = Logger.getLogger(CallmedResource.class);
     CallmedService callmedService;
     @Inject
-    public CallmedResources(CallmedService callmedService){
+    public CallmedResource(CallmedService callmedService){
         this.callmedService = callmedService;
     }
 

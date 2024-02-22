@@ -18,7 +18,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 import org.json.JSONObject;
 
-import static com.fahorro.integracion.util.Constants.*;
+import static com.fahorro.integracion.utils.Constants.*;
 @ApplicationScoped
 public class CallmedService
 {

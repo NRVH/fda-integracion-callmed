@@ -41,6 +41,9 @@ public class CalmedServiceHelper
         recetaGeneral.setFamiliar(receta.getFamiliar().trim());
         recetaGeneral.setIcd(med.getIcd10().trim());
 
+        recetaGeneral.setProveedorReceta("Callmed");
+        recetaGeneral.setRazonNoSurtir(true);
+
         lineItem.setEAN(med.getEan().trim());
         lineItem.setMedicamento(med.getMedicamento());
         lineItem.setCantidad(med.getCantidad().trim());
