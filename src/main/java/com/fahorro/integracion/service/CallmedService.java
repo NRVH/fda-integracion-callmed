@@ -8,11 +8,9 @@ import com.fahorro.integracion.dto.request.valreceta.RootReceta;
 import com.fahorro.integracion.dto.response.RecetaGeneral;
 import com.fahorro.integracion.exception.CallmedException;
 import com.fahorro.integracion.helper.CalmedServiceHelper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.json.bind.Jsonb;
-import jakarta.json.bind.JsonbBuilder;
-import jakarta.json.bind.JsonbConfig;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
@@ -25,6 +23,7 @@ public class CallmedService
     private static final Logger log = Logger.getLogger(CallmedService.class);
     private final CallmedClient callmedClient;
     private final CalmedServiceHelper helperCallmed;
+    private final ObjectMapper objectMapper;
     DataRequest data;
     @ConfigProperty(name = "callmed.winstondata.user")
     String user;
@@ -32,9 +31,10 @@ public class CallmedService
     String password;
 
     @Inject
-    public CallmedService(@RestClient CallmedClient callmedClient, CalmedServiceHelper helperCallmed) {
+    public CallmedService(@RestClient CallmedClient callmedClient, CalmedServiceHelper helperCallmed, ObjectMapper objectMapper) {
         this.callmedClient = callmedClient;
         this.helperCallmed = helperCallmed;
+        this.objectMapper = objectMapper;
         data = new DataRequest();
     }
 
@@ -43,16 +43,11 @@ public class CallmedService
         loginClaveCliente(nur);
         consultaReceta();
         consultaMedicamentos();
-
-        JsonbConfig config = new JsonbConfig().withNullValues(true);
-
-        try (Jsonb jsonb = JsonbBuilder.create(config))
+        try
         {
-            RecetaGeneral recetaGeneral = helperCallmed.buildData(data);
-            return jsonb.toJson(recetaGeneral);
+            return objectMapper.writeValueAsString(helperCallmed.buildData(data));
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new CallmedException("Error al serializar a JSON " + RecetaGeneral.class.getSimpleName(), 500, e);
         }
     }
