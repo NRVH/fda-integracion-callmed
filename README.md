@@ -131,7 +131,7 @@ curl -X GET "http://<host>/callmed/api/v1/receta?nur=<nur>"
 
 ### Consulta de estatus de servicio
 
-**GET** `/vitamedica/api/v1/test`
+**GET** `/callmed/test`
 
 Se agregó un metodo para validar si el servicio está disponible,
 para este servicio no es necesario enviar algun dato, contesta solo al consultar el endpoint
@@ -140,7 +140,7 @@ para este servicio no es necesario enviar algun dato, contesta solo al consultar
 
 ```json
 {
-  "message": "fda integracion vita medica version 1.0.0 is available!",
+  "message": "fda integracion callmed version 1.0.0 is available!",
   "status": 200,
   "success": true
 }
