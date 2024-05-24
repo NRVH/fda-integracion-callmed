@@ -5,32 +5,32 @@ consulta de recetas médicas.
 
 # Configuración de la Aplicación
 
-La aplicación está configurada para correr sobre Quarkus y utiliza varias extensiones y configuraciones para su correcto funcionamiento y para exponer su API. A continuación, se detalla la configuración principal utilizada en el archivo `application.yaml`.
+La aplicación está configurada para correr sobre Quarkus y utiliza varias extensiones y configuraciones para su correcto funcionamiento y para exponer su API. A continuación, se detalla la configuración principal utilizada en el archivo `application.properties`.
 
 
-```yaml
-quarkus:
-  http:
-    port: 8081
-  swagger-ui:
-    path: /api-integracion-callmed
-    always-include: true
-    enable: true
-    title: api-integracion-callmed
-    description: API Documentation
-  smallrye-openapi:
-    enable: true
-  rest-client:
-    "com.fahorro.integracion.client.CallmedClient":
-      url: https://www.winstondata.com.mx/SUSE2
-      scope: javax.inject.Singleton
+```properties
+quarkus.http.port=8081
+
+quarkus.swagger-ui.path=/api-integracion-callmed
+quarkus.swagger-ui.always-include=true
+quarkus.swagger-ui.enable=true
+quarkus.swagger-ui.title=api-integracion-callmed
+quarkus.swagger-ui.description=API Documentation
+
+quarkus.smallrye-openapi.enable=true
+
+quarkus.rest-client."com.fahorro.integracion.client.CallmedClient".url=https://www.winstondata.com.mx/SUSE2
+quarkus.rest-client."com.fahorro.integracion.client.CallmedClient".scope=javax.inject.Singleton
+
+callmed.user=usrFAPrueba
+callmed.password=W3bbHnn76
 ```
 
 ## EndPoints
 
 ### Consulta de recetas
 
-- **Endpoint:** `GET /callmed/api/v1/receta`
+- **Endpoint:** `GET /callmed/receta`
 - **Query Parameter:** `nur` - Número único de receta.
 - **Descripción:** Devuelve los datos de la receta basados en el NUR proporcionado.
 - **Respuestas:**
@@ -38,7 +38,7 @@ quarkus:
     - `400`: Datos de entrada inválidos.
     - `404`: Datos no encontrados.
     - `500`: Error interno del servidor.
-    - `503`: Servicio API Winstondata no disponible.
+    - `503`: Servicio API Callmed no disponible.
     - `504`: Timeout de comunicación con API Winstondata.
 
 **Ejemplo de uso:**

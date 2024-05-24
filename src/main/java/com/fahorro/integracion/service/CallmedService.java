@@ -24,10 +24,11 @@ public class CallmedService
     private final CallmedClient callmedClient;
     private final CalmedServiceHelper helperCallmed;
     private final ObjectMapper objectMapper;
+
     DataRequest data;
-    @ConfigProperty(name = "callmed.winstondata.user")
+    @ConfigProperty(name = "callmed.user")
     String user;
-    @ConfigProperty(name = "callmed.winstondata.password")
+    @ConfigProperty(name = "callmed.password")
     String password;
 
     @Inject

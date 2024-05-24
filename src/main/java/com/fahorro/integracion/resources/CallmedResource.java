@@ -13,7 +13,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.jboss.logging.Logger;
 
-@Path("/callmed/api/v1")
+@Path("/callmed/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CallmedResource {
@@ -34,10 +34,11 @@ public class CallmedResource {
             @APIResponse(responseCode = "400", description = "Datos de entrada inválidos"),
             @APIResponse(responseCode = "404", description = "Datos no encontrados"),
             @APIResponse(responseCode = "500", description = "Error interno del servidor"),
-            @APIResponse(responseCode = "503", description = "Servicio Api Winstondata no disponible"),
-            @APIResponse(responseCode = "504", description = "Timeout de comunicación con Api Winstondata")
+            @APIResponse(responseCode = "503", description = "Servicio Api Callmed no disponible"),
+            @APIResponse(responseCode = "504", description = "Timeout de comunicación con Api Callmed")
     })
-    public Response getReceta(@Parameter(description = "Número único de receta", required = true) @QueryParam("nur") String nur) {
+    public Response getReceta(@Parameter(description = "Número único de receta", required = true)
+                                  @QueryParam("nur") String nur) {
         try
         {
             return Response.ok().entity(callmedService.processCallmed(nur)).build();
