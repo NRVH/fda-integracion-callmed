@@ -35,6 +35,7 @@ public class CallmedHelper {
     @ConfigProperty(name = "callmed.password")
     String password;
 
+
     @Inject
     public CallmedHelper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
