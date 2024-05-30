@@ -53,6 +53,7 @@ public class RecetaNurService
         }
         catch (Exception e)
         {
+            log.error("Error al armar JSON de Receta General {} ::: {} ::: {}", RecetaGeneral.class.getSimpleName(), 500, e.getMessage());
             throw new CallmedException("Error al armar JSON de Receta General " + RecetaGeneral.class.getSimpleName(), 500, e);
         }
     }
