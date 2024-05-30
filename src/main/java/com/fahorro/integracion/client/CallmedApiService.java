@@ -10,7 +10,7 @@ import jakarta.ws.rs.Path;
 
 @RegisterRestClient(configKey="callmed-api")
 @ApplicationScoped
-public interface CallmedClient {
+public interface CallmedApiService {
 
     @POST
     @Path("/GetToken")

@@ -19,8 +19,8 @@ quarkus.swagger-ui.description=API Documentation
 
 quarkus.smallrye-openapi.enable=true
 
-quarkus.rest-client."com.fahorro.integracion.client.CallmedClient".url=https://www.winstondata.com.mx/SUSE2
-quarkus.rest-client."com.fahorro.integracion.client.CallmedClient".scope=javax.inject.Singleton
+quarkus.rest-client."com.fahorro.integracion.client.CallmedApiService".url=https://www.winstondata.com.mx/SUSE2
+quarkus.rest-client."com.fahorro.integracion.client.CallmedApiService".scope=javax.inject.Singleton
 
 callmed.user=usrFAPrueba
 callmed.password=W3bbHnn76
