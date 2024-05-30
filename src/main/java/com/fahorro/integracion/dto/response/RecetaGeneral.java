@@ -3,7 +3,7 @@ package com.fahorro.integracion.dto.response;
 import java.util.List;
 
 public class RecetaGeneral {
-    private Boolean cliente;
+    private String cliente;
     private String subCliente;
     private String numeroCliente;
     private String numeroSubCliente;
@@ -23,7 +23,7 @@ public class RecetaGeneral {
     private String numeroPaciente;
     private String paciente;
     private String proveedorReceta;
-    private Boolean razonNoSurtir;
+    private String razonNoSurtir;
     private Boolean sePuedeSurtir;
     private String copago;
     private Integer copiaTantos;
@@ -40,11 +40,11 @@ public class RecetaGeneral {
     private Boolean ventaValida;
     private List<LineItem> lineItem;
 
-    public Boolean getCliente() {
+    public String getCliente() {
         return cliente;
     }
 
-    public void setCliente(Boolean cliente) {
+    public void setCliente(String cliente) {
         this.cliente = cliente;
     }
 
@@ -200,11 +200,11 @@ public class RecetaGeneral {
         this.proveedorReceta = proveedorReceta;
     }
 
-    public Boolean getRazonNoSurtir() {
+    public String getRazonNoSurtir() {
         return razonNoSurtir;
     }
 
-    public void setRazonNoSurtir(Boolean razonNoSurtir) {
+    public void setRazonNoSurtir(String razonNoSurtir) {
         this.razonNoSurtir = razonNoSurtir;
     }
 

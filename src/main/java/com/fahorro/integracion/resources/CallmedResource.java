@@ -2,13 +2,12 @@ package com.fahorro.integracion.resources;
 
 import com.fahorro.integracion.dto.response.ErrorResponse;
 import com.fahorro.integracion.exception.CallmedException;
-import com.fahorro.integracion.service.CallmedService;
+import com.fahorro.integracion.service.RecetaNurService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.jboss.logging.Logger;
@@ -19,14 +18,16 @@ import org.jboss.logging.Logger;
 public class CallmedResource {
 
     private static final Logger log = Logger.getLogger(CallmedResource.class);
-    CallmedService callmedService;
+
+    RecetaNurService recetaNurService;
+
     @Inject
-    public CallmedResource(CallmedService callmedService){
-        this.callmedService = callmedService;
+    public CallmedResource(RecetaNurService recetaNurService){
+        this.recetaNurService = recetaNurService;
     }
 
     @GET
-    @Path("/receta")
+    @Path("/receta/{nur}")
     @Operation(summary = "Obtiene la información de una receta",
             description = "Devuelve los datos de la receta basados en el NUR proporcionado")
     @APIResponses(value = {
@@ -37,11 +38,10 @@ public class CallmedResource {
             @APIResponse(responseCode = "503", description = "Servicio Api Callmed no disponible"),
             @APIResponse(responseCode = "504", description = "Timeout de comunicación con Api Callmed")
     })
-    public Response getReceta(@Parameter(description = "Número único de receta", required = true)
-                                  @QueryParam("nur") String nur) {
+    public Response getReceta(@PathParam("nur") String nur, @QueryParam("codigoSucursal") String codigoSucursal) {
         try
         {
-            return Response.ok().entity(callmedService.processCallmed(nur)).build();
+            return Response.ok().entity(recetaNurService.processRecetaNur(nur, codigoSucursal)).build();
         }
         catch (CallmedException e)
         {
