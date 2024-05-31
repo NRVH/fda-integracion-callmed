@@ -52,15 +52,18 @@ public class RecetaNurHelper {
         String idConvenio = processResponse(data);
 
         if (Objects.isNull(idConvenio)) {
-            log.info("Clave Cliente ::: {} Convenio no encontrado con la clave cliente", data.getClaveCliente().getClaveCliente());
-            throw new ExcepcionSucursalNoEncontrada("Clave Cliente: " + data.getClaveCliente().getClaveCliente() + " :: Convenio no encontrado con la clave cliente");
+            log.info("Clave Cliente ::: {} Convenio no encontrado con la clave cliente",
+                    data.getClaveCliente().getClaveCliente());
+            throw new ExcepcionSucursalNoEncontrada("Clave Cliente: " +
+                    data.getClaveCliente().getClaveCliente() + " :: Convenio no encontrado con la clave cliente");
         }
 
         data.setIdConvenio(idConvenio);
 
         if (Objects.isNull(sucursal)) {
             log.info("NUR ::: {} , Sucursal no encontrada ::: {}", data.getNur(), data.getCodigoSucursal());
-            throw new ExcepcionSucursalNoEncontrada("No se encontro la sucursal numero " + data.getCodigoSucursal() + " en la base de datos.");
+            throw new ExcepcionSucursalNoEncontrada("No se encontro la sucursal numero " +
+                    data.getCodigoSucursal() + " en la base de datos.");
         }
 
         ConvenioResponseDTO convenio = convenioApiService.getConvenio(idConvenio);
@@ -68,7 +71,8 @@ public class RecetaNurHelper {
 
         if (Objects.isNull(convenioProducto.getEntidad().getListDataJson())) {
             log.info("idConvenio ::: {} Producto no encontrado con el idConvenio de receta", idConvenio);
-            throw new ExcepcionSucursalNoEncontrada("idConvenio: " + idConvenio + " :: Producto no encontrado con el idConvenio de receta");
+            throw new ExcepcionSucursalNoEncontrada("idConvenio: " + idConvenio +
+                    " :: Producto no encontrado con el idConvenio de receta");
         }
 
         String idCliente = convenio.getEntidad().getDataJson().getIdCliente().toString();

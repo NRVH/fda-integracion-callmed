@@ -48,8 +48,6 @@ public class RecetaNurService
         callmedHelper.consultaMedicamentos(data);
 
         recetaNurHelper.recetaNurHelperProcess(data);
-
-
         try
         {
             String response = objectMapper.writeValueAsString(respuestaGeneralHelper.buildData(data));
