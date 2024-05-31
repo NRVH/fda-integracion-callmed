@@ -15,4 +15,9 @@ public interface ClienteApiService {
     @Path("/clientes/{clientId}")
     @Produces("application/json")
     ClienteApiResponseDTO getClienteById(@PathParam("clientId") String clientId);
+
+    @GET
+    @Path("/clientes/numero/{numCliente}")
+    @Produces("application/json")
+    ClienteApiResponseDTO getClienteByNumCliente(@PathParam("numCliente") String clientId);
 }

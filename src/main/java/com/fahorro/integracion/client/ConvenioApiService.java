@@ -18,6 +18,11 @@ public interface ConvenioApiService {
     ConvenioResponseDTO getConvenio(@PathParam("idConvenio") String idConvenio);
 
     @GET
+    @Path("/convenio/cliente/{idCliente}")
+    @Produces("application/json")
+    ConvenioResponseDTO getConvenioByIdCliente(@PathParam("idCliente") String idCliente);
+
+    @GET
     @Path("/convenios/claveCliente/{claveClienteCallmed}")
     @Produces("application/json")
     Response getConvenioByClaveCliente(@PathParam("claveClienteCallmed") String claveClienteCallmed);

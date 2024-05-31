@@ -5,18 +5,18 @@ public class SucursalApiResponseDTO {
     private String uuid;
     private int estatus;
     private String detalles;
-    private Entidad entidad;
+    private EntidadDTO entidad;
     private Object listEntidad;
 
 
-    public static class Entidad {
+    public static class EntidadDTO {
         private String id;
         private String nombre;
-        private DataJson dataJson;
+        private DataJsonDTO dataJson;
         private Object listDataJson;
 
 
-        public static class DataJson {
+        public static class DataJsonDTO {
             private int tiendaId;
             private String tienda;
             private String fechaApertura;
@@ -162,11 +162,11 @@ public class SucursalApiResponseDTO {
             this.nombre = nombre;
         }
 
-        public DataJson getDataJson() {
+        public DataJsonDTO getDataJson() {
             return dataJson;
         }
 
-        public void setDataJson(DataJson dataJson) {
+        public void setDataJson(DataJsonDTO dataJson) {
             this.dataJson = dataJson;
         }
 
@@ -203,11 +203,11 @@ public class SucursalApiResponseDTO {
         this.detalles = detalles;
     }
 
-    public Entidad getEntidad() {
+    public EntidadDTO getEntidad() {
         return entidad;
     }
 
-    public void setEntidad(Entidad entidad) {
+    public void setEntidad(EntidadDTO entidad) {
         this.entidad = entidad;
     }
 

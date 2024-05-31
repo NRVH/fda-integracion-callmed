@@ -3,11 +3,7 @@ package com.fahorro.integracion.helper;
 import com.fahorro.integracion.client.*;
 import com.fahorro.integracion.dto.*;
 import com.fahorro.integracion.dto.request.DataRequest;
-import com.fahorro.integracion.dto.request.valreceta.Receta;
 import com.fahorro.integracion.exception.ExcepcionSucursalNoEncontrada;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
@@ -16,11 +12,7 @@ import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.StringReader;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @ApplicationScoped
@@ -70,7 +62,7 @@ public class RecetaNurHelper {
         ConvenioProductoResponseDTO convenioProducto = productoApiService.getProductoByConvenio(idConvenio);
 
         if (Objects.isNull(convenioProducto.getEntidad().getListDataJson())) {
-            log.info("idConvenio ::: {} Producto no encontrado con el idConvenio de receta", idConvenio);
+            log.info("idConvenio ::: {} Convenio producto no encontrado con el idConvenio", idConvenio);
             throw new ExcepcionSucursalNoEncontrada("idConvenio: " + idConvenio +
                     " :: Producto no encontrado con el idConvenio de receta");
         }

@@ -16,6 +16,15 @@ public class DataRequest
     private ClienteApiResponseDTO clienteEntidad;
     private SubClienteApiResponseDTO subClienteEntidad;
     private ProductoApiResponseDTO productoEntidad;
+    private SucursalApiResponseDTO sucursalEntidad;
+
+    public SucursalApiResponseDTO getSucursalEntidad() {
+        return sucursalEntidad;
+    }
+
+    public void setSucursalEntidad(SucursalApiResponseDTO sucursalEntidad) {
+        this.sucursalEntidad = sucursalEntidad;
+    }
 
     public String getIdConvenio() {
         return idConvenio;

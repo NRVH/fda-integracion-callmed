@@ -5,8 +5,10 @@ import com.fahorro.integracion.dto.response.RecetaGeneral;
 import com.fahorro.integracion.exception.CallmedException;
 import com.fahorro.integracion.helper.CallmedHelper;
 import com.fahorro.integracion.helper.RecetaNurHelper;
+import com.fahorro.integracion.helper.RecetaNurSurtirHelper;
 import com.fahorro.integracion.helper.RespuestaGeneralHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
@@ -21,6 +23,7 @@ public class RecetaNurService
     private final ObjectMapper objectMapper;
     private final DataRequest data;
     private final RecetaNurHelper recetaNurHelper;
+    private final RecetaNurSurtirHelper recetaNurSurtirHelper;
     private final CallmedHelper callmedHelper;
     private final GuardarRecetaAsync guardarRecetaAsync;
 
@@ -29,10 +32,12 @@ public class RecetaNurService
     public RecetaNurService(RespuestaGeneralHelper respuestaGeneralHelper,
                             ObjectMapper objectMapper,
                             RecetaNurHelper recetaNurHelper,
+                            RecetaNurSurtirHelper recetaNurSurtirHelper,
                             CallmedHelper callmedHelper, GuardarRecetaAsync guardarRecetaAsync) {
         this.respuestaGeneralHelper = respuestaGeneralHelper;
         this.objectMapper = objectMapper;
         this.recetaNurHelper = recetaNurHelper;
+        this.recetaNurSurtirHelper = recetaNurSurtirHelper;
         this.callmedHelper = callmedHelper;
         this.guardarRecetaAsync = guardarRecetaAsync;
         this.data = new DataRequest();
@@ -65,21 +70,22 @@ public class RecetaNurService
     public String processSurtirRecetaNur(String nur, RequestSurtirRecetaNur recetaNur) throws Exception {
 
         data.setNur(nur);
-        //data.setCodigoSucursal(codigoSucursal);
 
-        callmedHelper.loginClaveCliente(data);
-        callmedHelper.consultaReceta(data);
-        callmedHelper.consultaMedicamentos(data);
+        String idReceta = recetaNurSurtirHelper.recetaNurSurtirProcess(data, recetaNur);
 
-        recetaNurHelper.recetaNurHelperProcess(data);
         try
         {
-            return objectMapper.writeValueAsString(respuestaGeneralHelper.buildData(data));
+            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectNode jsonObject = objectMapper.createObjectNode();
+            jsonObject.put("orderid", idReceta);
+            jsonObject.putNull("autorizacion");
+
+            return objectMapper.writeValueAsString(jsonObject);
         }
         catch (Exception e)
         {
-            log.error("Error al armar JSON de Receta General {} ::: {} ::: {}", RecetaGeneral.class.getSimpleName(), 500, e.getMessage());
-            throw new CallmedException("Error al armar JSON de Receta General " + RecetaGeneral.class.getSimpleName(), 500, e);
+            log.error("Error generar respuesta surtir receta nur, OrderId generado {} ::: {} ::: {}", idReceta, 500, e.getMessage());
+            throw new CallmedException("Error generar respuesta surtir receta nur, OrderId generado " + idReceta, 500, e);
         }
     }
 }

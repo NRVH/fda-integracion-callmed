@@ -33,7 +33,7 @@ public class GuardarRecetaAsync {
     @Asynchronous
     public CompletionStage<Void> asyncMethod(DataRequest data) {
         return CompletableFuture.runAsync(() -> {
-            RecetaApiResponseDTO.EntidadDTO.DataJsonDTO receta = new RecetaApiResponseDTO.EntidadDTO.DataJsonDTO();
+            RecetaApiResponseDTO.EntidadDTO.DataJsonDTO recetaRequest = new RecetaApiResponseDTO.EntidadDTO.DataJsonDTO();
             ConvenioResponseDTO.EntidadDTO.DataJsonDTO convenioJson = data.getConvenioEntidad().getEntidad().getDataJson();
             ProductoApiResponseDTO.EntidadDTO.DataJsonDTO productoJson = data.getProductoEntidad().getEntidad().getDataJson();
 
@@ -43,22 +43,22 @@ public class GuardarRecetaAsync {
             LocalDateTime now = LocalDateTime.now();
             String formattedDate = now.format(formatter);
 
-            receta.setNombre(recetaCallmed.getNombrePaciente());
-            receta.setDescripcion("");
-            receta.setFechaCreacion(formattedDate);
-            receta.setUltimaModificacion(formattedDate);
-            receta.setIdConvenio(data.getIdConvenio());
-            receta.setNombreMedico(receta.getNombreMedico());
-            receta.setCedulaMedico(recetaCallmed.getClaveMedico().trim());
-            receta.setNombreDelPaciente(receta.getNombreDelPaciente());
-            receta.setTotalReceta(BigDecimal.valueOf(productoJson.getPrecioUnitario()));
-            receta.setMontoCopago(BigDecimal.valueOf(convenioJson.getMontoCopago()));
-            receta.setIdSucursal(data.getCodigoSucursal());
-            receta.setRazonNoSurtir("");
-            receta.setEstatus(true);
-            receta.setEstatusStr("Pendiente Surtir");
+            recetaRequest.setNombre(recetaCallmed.getNombrePaciente());
+            recetaRequest.setDescripcion("");
+            recetaRequest.setFechaCreacion(formattedDate);
+            recetaRequest.setUltimaModificacion(formattedDate);
+            recetaRequest.setIdConvenio(data.getIdConvenio());
+            recetaRequest.setNombreMedico(recetaCallmed.getNombreMedico());
+            recetaRequest.setCedulaMedico(recetaCallmed.getClaveMedico().trim());
+            recetaRequest.setNombreDelPaciente(recetaCallmed.getNombrePaciente());
+            recetaRequest.setTotalReceta(BigDecimal.valueOf(productoJson.getPrecioUnitario()));
+            recetaRequest.setMontoCopago(BigDecimal.valueOf(convenioJson.getMontoCopago()));
+            recetaRequest.setIdSucursal(data.getCodigoSucursal());
+            recetaRequest.setRazonNoSurtir("");
+            recetaRequest.setEstatus(true);
+            recetaRequest.setEstatusStr("Pendiente Surtir");
 
-            try (Response response = recetaApiService.guardarReceta(receta)) {
+            try (Response response = recetaApiService.guardarReceta(recetaRequest)) {
                 if (response.getStatus() == 200) {
                     String responseBody = response.readEntity(String.class);
                     ObjectMapper mapper = new ObjectMapper();
