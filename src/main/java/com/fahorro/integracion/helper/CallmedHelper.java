@@ -4,9 +4,8 @@ import com.fahorro.integracion.client.CallmedApiService;
 import com.fahorro.integracion.dto.request.ClaveCliente;
 import com.fahorro.integracion.dto.request.DataRequest;
 import com.fahorro.integracion.dto.request.MedicamentosApi;
-import com.fahorro.integracion.dto.request.valreceta.RootReceta;
+import com.fahorro.integracion.dto.request.valreceta.RecetaCallmed;
 import com.fahorro.integracion.exception.CallmedException;
-import com.fahorro.integracion.service.RecetaNurService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -91,14 +90,14 @@ public class CallmedHelper {
             recetaJson.put(TOKEN, data.getToken());
 
             String clienteResponse = callmedApiService.valReceta(recetaJson.toString());
-            RootReceta rootReceta =  objectMapper.readValue(clienteResponse, RootReceta.class);
+            RecetaCallmed recetaCallmed =  objectMapper.readValue(clienteResponse, RecetaCallmed.class);
 
-            if (!rootReceta.isSuccess()) {
-                String message = rootReceta.getMessage() + SEPARATOR + NUR + data.getNur();
+            if (!recetaCallmed.isSuccess()) {
+                String message = recetaCallmed.getMessage() + SEPARATOR + NUR + data.getNur();
                 throw new CallmedException(message, 404);
             }
 
-            data.setRootReceta(rootReceta);
+            data.setRecetaCallmed(recetaCallmed);
 
             log.info(String.format("%s %s :: Receta obtenida y procesada con éxito.", NUR, data.getNur()));
         }

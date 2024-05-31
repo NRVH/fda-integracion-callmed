@@ -22,17 +22,19 @@ public class RecetaNurService
     private final DataRequest data;
     private final RecetaNurHelper recetaNurHelper;
     private final CallmedHelper callmedHelper;
+    private final GuardarRecetaAsync guardarRecetaAsync;
 
 
     @Inject
     public RecetaNurService(RespuestaGeneralHelper respuestaGeneralHelper,
                             ObjectMapper objectMapper,
                             RecetaNurHelper recetaNurHelper,
-                            CallmedHelper callmedHelper) {
+                            CallmedHelper callmedHelper, GuardarRecetaAsync guardarRecetaAsync) {
         this.respuestaGeneralHelper = respuestaGeneralHelper;
         this.objectMapper = objectMapper;
         this.recetaNurHelper = recetaNurHelper;
         this.callmedHelper = callmedHelper;
+        this.guardarRecetaAsync = guardarRecetaAsync;
         this.data = new DataRequest();
     }
 
@@ -40,6 +42,32 @@ public class RecetaNurService
 
         data.setNur(nur);
         data.setCodigoSucursal(codigoSucursal);
+
+        callmedHelper.loginClaveCliente(data);
+        callmedHelper.consultaReceta(data);
+        callmedHelper.consultaMedicamentos(data);
+
+        recetaNurHelper.recetaNurHelperProcess(data);
+
+
+        try
+        {
+            String response = objectMapper.writeValueAsString(respuestaGeneralHelper.buildData(data));
+            guardarRecetaAsync.asyncMethod(data);
+
+            return response;
+        }
+        catch (Exception e)
+        {
+            log.error("Error al armar JSON de Receta General {} ::: {} ::: {}", RecetaGeneral.class.getSimpleName(), 500, e.getMessage());
+            throw new CallmedException("Error al armar JSON de Receta General " + RecetaGeneral.class.getSimpleName(), 500, e);
+        }
+    }
+
+    public String processSurtirRecetaNur(String nur, RequestSurtirRecetaNur recetaNur) throws Exception {
+
+        data.setNur(nur);
+        //data.setCodigoSucursal(codigoSucursal);
 
         callmedHelper.loginClaveCliente(data);
         callmedHelper.consultaReceta(data);

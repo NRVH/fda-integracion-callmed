@@ -2,7 +2,7 @@ package com.fahorro.integracion.dto.request.valreceta;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RootReceta {
+public class RecetaCallmed {
     @JsonProperty("Success")
     private boolean success;
 

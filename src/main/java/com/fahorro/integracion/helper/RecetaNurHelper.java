@@ -3,7 +3,11 @@ package com.fahorro.integracion.helper;
 import com.fahorro.integracion.client.*;
 import com.fahorro.integracion.dto.*;
 import com.fahorro.integracion.dto.request.DataRequest;
+import com.fahorro.integracion.dto.request.valreceta.Receta;
 import com.fahorro.integracion.exception.ExcepcionSucursalNoEncontrada;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
@@ -14,11 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.StringReader;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @ApplicationScoped
-public class RecetaNurHelper
-{
+public class RecetaNurHelper {
     private static final Logger log = LoggerFactory.getLogger(RecetaNurHelper.class);
 
     @Inject
@@ -38,8 +44,7 @@ public class RecetaNurHelper
     ProductoApiService productoApiService;
 
 
-    public void recetaNurHelperProcess(DataRequest data) throws Exception
-    {
+    public void recetaNurHelperProcess(DataRequest data) throws Exception {
         log.info("Validando la petición con NUR ::: {}, SUCURSAL ::: {}", data.getNur(), data.getCodigoSucursal());
 
         SucursalApiResponseDTO sucursal = sucursalApiService.getSucursalById(data.getCodigoSucursal());
@@ -50,6 +55,8 @@ public class RecetaNurHelper
             log.info("Clave Cliente ::: {} Convenio no encontrado con la clave cliente", data.getClaveCliente().getClaveCliente());
             throw new ExcepcionSucursalNoEncontrada("Clave Cliente: " + data.getClaveCliente().getClaveCliente() + " :: Convenio no encontrado con la clave cliente");
         }
+
+        data.setIdConvenio(idConvenio);
 
         if (Objects.isNull(sucursal)) {
             log.info("NUR ::: {} , Sucursal no encontrada ::: {}", data.getNur(), data.getCodigoSucursal());
@@ -91,6 +98,7 @@ public class RecetaNurHelper
         data.setSubClienteEntidad(subCliente);
         data.setProductoEntidad(producto);
     }
+
 
     public String processResponse(DataRequest data)  {
         Response response = convenioApiService.getConvenioByClaveCliente(data.getClaveCliente().getClaveCliente());

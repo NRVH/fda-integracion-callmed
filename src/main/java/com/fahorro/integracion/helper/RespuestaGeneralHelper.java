@@ -22,7 +22,7 @@ public class RespuestaGeneralHelper
         List<LineItem> lineItemList = new ArrayList<>();
         LineItem lineItem = new LineItem();
 
-        Receta receta = data.getRootReceta().getReceta();
+        Receta receta = data.getRecetaCallmed().getReceta();
         Medicamento med = data.getMedicamentos().getMedicamento();
 
         ClienteApiResponseDTO.EntidadDTO clienteEntidad = data.getClienteEntidad().getEntidad();
@@ -56,7 +56,6 @@ public class RespuestaGeneralHelper
         recetaGeneral.setNumeroPaciente(receta.getClavePaciente().trim());
         recetaGeneral.setPaciente(receta.getNombrePaciente().trim());
         recetaGeneral.setProveedorReceta("Callmed");
-
         recetaGeneral.setFamiliar(receta.getFamiliar().trim());
         recetaGeneral.setIcd(med.getIcd10().trim());
 
@@ -84,7 +83,7 @@ public class RespuestaGeneralHelper
         lineItem.setNur(data.getNur());
         lineItem.setSePuedeSurtir(true);
         lineItem.setRazonParaNoSurtir(recetaGeneral.getRazonNoSurtir());
-        lineItem.setNumeroAutorizacion(data.getRootReceta().getReceta().getAutorizacion().trim());
+        lineItem.setNumeroAutorizacion(receta.getAutorizacion().trim());
 
         lineItemList.add(lineItem);
 

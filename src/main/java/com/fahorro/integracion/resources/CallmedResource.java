@@ -1,5 +1,6 @@
 package com.fahorro.integracion.resources;
 
+import com.fahorro.integracion.dto.request.RequestSurtirRecetaNur;
 import com.fahorro.integracion.dto.response.ErrorResponse;
 import com.fahorro.integracion.exception.CallmedException;
 import com.fahorro.integracion.service.RecetaNurService;
@@ -8,6 +9,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.jboss.logging.Logger;
@@ -38,7 +40,7 @@ public class CallmedResource {
             @APIResponse(responseCode = "503", description = "Servicio Api Callmed no disponible"),
             @APIResponse(responseCode = "504", description = "Timeout de comunicación con Api Callmed")
     })
-    public Response getReceta(@PathParam("nur") String nur, @QueryParam("codigoSucursal") String codigoSucursal) {
+    public Response recetaNur(@PathParam("nur") String nur, @QueryParam("codigoSucursal") String codigoSucursal) {
         try
         {
             return Response.ok().entity(recetaNurService.processRecetaNur(nur, codigoSucursal)).build();
@@ -57,6 +59,41 @@ public class CallmedResource {
                     false,
                     500,
                     "Error inesperado al procesar receta")).build();
+        }
+    }
+
+    @POST
+    @Path("/receta/{nur}/surtir")
+    @Operation(summary = "Surtir receta identificada por NUR",
+            description = "Devuelve los datos de la receta basados en el NUR proporcionado")
+    @APIResponses(value = {
+            @APIResponse(responseCode = "200", description = "Receta surtida"),
+            @APIResponse(responseCode = "400", description = "Datos de entrada inválidos"),
+            @APIResponse(responseCode = "404", description = "Datos no encontrados"),
+            @APIResponse(responseCode = "500", description = "Error interno del servidor"),
+            @APIResponse(responseCode = "503", description = "Servicio Api Callmed no disponible"),
+            @APIResponse(responseCode = "504", description = "Timeout de comunicación con Api Callmed")
+    })
+    public Response surtirRecetaNur(@PathParam("nur") String nur, @RequestBody RequestSurtirRecetaNur recetaNur)
+    {
+        try
+        {
+            return Response.ok().entity(recetaNurService.processSurtirRecetaNur(nur, recetaNur)).build();
+        }
+        catch (CallmedException e)
+        {
+            log.error(e.getMessage());
+            return Response.status(e.getCodeError()).entity(new ErrorResponse(
+                    false,
+                    e.getCodeError(),
+                    e.getMessage())).build();
+        }
+        catch (Exception e) {
+            log.error("Error inesperado: ", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorResponse(
+                    false,
+                    500,
+                    "Error inesperado al procesar surtir receta nur")).build();
         }
     }
 

@@ -1,20 +1,37 @@
 package com.fahorro.integracion.dto.request;
 
 import com.fahorro.integracion.dto.*;
-import com.fahorro.integracion.dto.request.valreceta.RootReceta;
+import com.fahorro.integracion.dto.request.valreceta.RecetaCallmed;
 
 public class DataRequest
 {
     private String nur;
     private String codigoSucursal;
     private String token;
+    private String idConvenio;
     private ClaveCliente claveCliente;
-    private RootReceta rootReceta;
+    private RecetaCallmed recetaCallmed;
     private MedicamentosApi medicamentosApi;
     private ConvenioResponseDTO convenioEntidad;
     private ClienteApiResponseDTO clienteEntidad;
     private SubClienteApiResponseDTO subClienteEntidad;
     private ProductoApiResponseDTO productoEntidad;
+
+    public String getIdConvenio() {
+        return idConvenio;
+    }
+
+    public void setIdConvenio(String idConvenio) {
+        this.idConvenio = idConvenio;
+    }
+
+    public RecetaCallmed getRecetaCallmed() {
+        return recetaCallmed;
+    }
+
+    public void setRecetaCallmed(RecetaCallmed recetaCallmed) {
+        this.recetaCallmed = recetaCallmed;
+    }
 
     public ConvenioResponseDTO getConvenioEntidad() {
         return convenioEntidad;
@@ -54,14 +71,6 @@ public class DataRequest
 
     public void setMedicamentos(MedicamentosApi medicamentosApi) {
         this.medicamentosApi = medicamentosApi;
-    }
-
-    public RootReceta getRootReceta() {
-        return rootReceta;
-    }
-
-    public void setRootReceta(RootReceta rootReceta) {
-        this.rootReceta = rootReceta;
     }
 
     public String getCodigoSucursal() {
