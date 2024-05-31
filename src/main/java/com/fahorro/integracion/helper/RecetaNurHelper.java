@@ -6,9 +6,14 @@ import com.fahorro.integracion.dto.request.DataRequest;
 import com.fahorro.integracion.exception.ExcepcionSucursalNoEncontrada;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.StringReader;
 import java.util.Objects;
 
 @ApplicationScoped
@@ -18,24 +23,16 @@ public class RecetaNurHelper
 
     @Inject
     @RestClient
-    RecetaApiService recetaApiService;
-
-    @Inject
-    @RestClient
     SucursalApiService sucursalApiService;
-
     @Inject
     @RestClient
     ConvenioApiService convenioApiService;
-
     @Inject
     @RestClient
     ClienteApiService clienteApiService;
-
     @Inject
     @RestClient
     SubClienteApiService subClienteApiService;
-
     @Inject
     @RestClient
     ProductoApiService productoApiService;
@@ -45,13 +42,13 @@ public class RecetaNurHelper
     {
         log.info("Validando la petición con NUR ::: {}, SUCURSAL ::: {}", data.getNur(), data.getCodigoSucursal());
 
-        RecetaApiResponseDTO receta = recetaApiService.getRecetaByNur(data.getNur());
         SucursalApiResponseDTO sucursal = sucursalApiService.getSucursalById(data.getCodigoSucursal());
 
+        String idConvenio = processResponse(data);
 
-        if (Objects.isNull(receta)) {
-            log.info("NUR ::: {} :: Receta no encontrada con el nur proporcionado", data.getNur());
-            throw new ExcepcionSucursalNoEncontrada("NUR: " + data.getNur() + " :: Receta no encontrada con el NUR proporcionado");
+        if (Objects.isNull(idConvenio)) {
+            log.info("Clave Cliente ::: {} Convenio no encontrado con la clave cliente", data.getClaveCliente().getClaveCliente());
+            throw new ExcepcionSucursalNoEncontrada("Clave Cliente: " + data.getClaveCliente().getClaveCliente() + " :: Convenio no encontrado con la clave cliente");
         }
 
         if (Objects.isNull(sucursal)) {
@@ -59,14 +56,8 @@ public class RecetaNurHelper
             throw new ExcepcionSucursalNoEncontrada("No se encontro la sucursal numero " + data.getCodigoSucursal() + " en la base de datos.");
         }
 
-        String idConvenio = receta.getEntidad().getDataJson().getIdConvenio();
         ConvenioResponseDTO convenio = convenioApiService.getConvenio(idConvenio);
         ConvenioProductoResponseDTO convenioProducto = productoApiService.getProductoByConvenio(idConvenio);
-
-        if (Objects.isNull(convenio.getEntidad().getDataJson())) {
-            log.info("idConvenio ::: {} Convenio no encontrado con el idConvenio de receta", idConvenio);
-            throw new ExcepcionSucursalNoEncontrada("idConvenio: " + idConvenio + " :: Convenio no encontrado con el idConvenio de receta");
-        }
 
         if (Objects.isNull(convenioProducto.getEntidad().getListDataJson())) {
             log.info("idConvenio ::: {} Producto no encontrado con el idConvenio de receta", idConvenio);
@@ -95,10 +86,29 @@ public class RecetaNurHelper
             throw new ExcepcionSucursalNoEncontrada("EAN: " + ean + " :: Producto no encontrado");
         }
 
-        data.setRecetaEntidad(receta);
         data.setConvenioEntidad(convenio);
         data.setClienteEntidad(cliente);
         data.setSubClienteEntidad(subCliente);
         data.setProductoEntidad(producto);
+    }
+
+    public String processResponse(DataRequest data)  {
+        Response response = convenioApiService.getConvenioByClaveCliente(data.getClaveCliente().getClaveCliente());
+
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+            try {
+                String jsonString = response.readEntity(String.class);
+                JsonObject json = Json.createReader(new StringReader(jsonString)).readObject();
+                String idConvenio = String.valueOf(json.getInt("idConvenio"));
+
+                log.info("ID del Convenio: {}", idConvenio);
+                return idConvenio;
+            } catch (Exception e) {
+                log.error("Se genero un error al obtener el idConvenio");
+            }
+        } else {
+            log.error("Error: {}", response.getStatus());
+        }
+        return null;
     }
 }

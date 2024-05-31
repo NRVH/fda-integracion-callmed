@@ -11,19 +11,10 @@ public class DataRequest
     private ClaveCliente claveCliente;
     private RootReceta rootReceta;
     private MedicamentosApi medicamentosApi;
-    private RecetaApiResponseDTO recetaEntidad;
     private ConvenioResponseDTO convenioEntidad;
     private ClienteApiResponseDTO clienteEntidad;
     private SubClienteApiResponseDTO subClienteEntidad;
     private ProductoApiResponseDTO productoEntidad;
-
-    public RecetaApiResponseDTO getRecetaEntidad() {
-        return recetaEntidad;
-    }
-
-    public void setRecetaEntidad(RecetaApiResponseDTO recetaEntidad) {
-        this.recetaEntidad = recetaEntidad;
-    }
 
     public ConvenioResponseDTO getConvenioEntidad() {
         return convenioEntidad;

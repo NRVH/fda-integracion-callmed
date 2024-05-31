@@ -41,11 +41,11 @@ public class RecetaNurService
         data.setNur(nur);
         data.setCodigoSucursal(codigoSucursal);
 
-        recetaNurHelper.recetaNurHelperProcess(data);
         callmedHelper.loginClaveCliente(data);
         callmedHelper.consultaReceta(data);
         callmedHelper.consultaMedicamentos(data);
 
+        recetaNurHelper.recetaNurHelperProcess(data);
         try
         {
             return objectMapper.writeValueAsString(respuestaGeneralHelper.buildData(data));

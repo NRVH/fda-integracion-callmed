@@ -28,7 +28,6 @@ public class RespuestaGeneralHelper
         ClienteApiResponseDTO.EntidadDTO clienteEntidad = data.getClienteEntidad().getEntidad();
         SubClienteApiResponseDTO.EntidadDTO.DataJsonDTO subClienteJson = data.getSubClienteEntidad().getEntidad().getDataJson();
         ConvenioResponseDTO.EntidadDTO.DataJsonDTO convenioJson = data.getConvenioEntidad().getEntidad().getDataJson();
-        RecetaApiResponseDTO.EntidadDTO.DataJsonDTO recetaJson = data.getRecetaEntidad().getEntidad().getDataJson();
         ProductoApiResponseDTO.EntidadDTO.DataJsonDTO productoJson = data.getProductoEntidad().getEntidad().getDataJson();
 
         TipoCopago tipoCopago = new TipoCopago();
@@ -53,11 +52,10 @@ public class RespuestaGeneralHelper
         recetaGeneral.setEspecialidad(receta.getDoctorEspecialidad().trim());
         recetaGeneral.setFechaReceta(receta.getFechaConsulta().trim());
         recetaGeneral.setMedico(receta.getNombreMedico().trim());
-        recetaGeneral.setMedicoCedula(recetaJson.getCedulaMedico().trim());
+        recetaGeneral.setMedicoCedula(receta.getClaveMedico().trim());
         recetaGeneral.setNumeroPaciente(receta.getClavePaciente().trim());
         recetaGeneral.setPaciente(receta.getNombrePaciente().trim());
         recetaGeneral.setProveedorReceta("Callmed");
-        recetaGeneral.setRazonNoSurtir(recetaJson.getRazonNoSurtir());
 
         recetaGeneral.setFamiliar(receta.getFamiliar().trim());
         recetaGeneral.setIcd(med.getIcd10().trim());
