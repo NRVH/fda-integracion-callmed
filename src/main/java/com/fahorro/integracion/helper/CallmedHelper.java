@@ -44,104 +44,115 @@ public class CallmedHelper {
     public void loginClaveCliente(DataRequest data) throws CallmedException {
         JSONObject clienteJson = new JSONObject();
 
-        try
-        {
+        try {
+            log.info("Iniciando proceso login clave cliente Callmed");
+
             JSONObject loginJson = new JSONObject();
             loginJson.put("Usuario", user);
             loginJson.put("Contra", password);
             String loginPayload = loginJson.toString();
 
+            log.debug("Payload de token: {}", loginPayload);
+
             String tokenResponse = callmedApiService.login(loginPayload);
+            log.info("Token obtenido");
+
             clienteJson.put(FOLIO, data.getNur());
             clienteJson.put(TOKEN, tokenResponse.replace("\"", ""));
+            log.debug("JSON para solicitud de clave cliente: {}", clienteJson);
 
             String clienteResponse = callmedApiService.claveCliente(clienteJson.toString());
-            ClaveCliente claveCliente = objectMapper.readValue(clienteResponse, ClaveCliente.class);
+            log.info("Respuesta recibida para solicitud de clave cliente ::: {}", clienteResponse);
 
+            ClaveCliente claveCliente = objectMapper.readValue(clienteResponse, ClaveCliente.class);
 
             if (!claveCliente.isSuccess()) {
                 String message = claveCliente.getMessage() + SEPARATOR + NUR + data.getNur();
+                log.warn("Clave cliente no exitosa para NUR: {} - Mensaje: {}", data.getNur(), claveCliente.getMessage());
                 throw new CallmedException(message, 404);
             }
 
             data.setClaveCliente(claveCliente);
             data.setToken(tokenResponse);
 
-            log.info(String.format("%s %s :: Clave cliente obtenida y procesada con éxito.", NUR, data.getNur()));
-        }
-        catch (CallmedException e)
-        {
+            log.info("{} {} :: Clave cliente obtenida y procesada con éxito.", NUR, data.getNur());
+        } catch (CallmedException e) {
+            log.error("CallmedException capturada para NUR: {} - Error: {}", data.getNur(), e.getMessage(), e);
             throw e;
-        }
-        catch (Exception e) {
-            log.error(String.format("%s %s :: CLAVE CLIENTE NO ENCONTRADA EN CALLMED: %s", NUR, data.getNur(), clienteJson), e);
+        } catch (Exception e) {
+            log.error("{} {} :: CLAVE CLIENTE NO ENCONTRADA EN CALLMED: {} - Error: {}", NUR, data.getNur(), clienteJson, e.getMessage(), e);
             ExceptionHelper.handleException(data.getNur(), e);
         }
     }
 
     public void consultaReceta(DataRequest data) throws CallmedException {
-
         JSONObject recetaJson = new JSONObject();
 
-        try
-        {
+        try {
+            log.info("Iniciando consulta de receta Callmed");
+
             recetaJson.put("ClaveCliente", data.getClaveCliente().getClaveCliente());
             recetaJson.put(FOLIO, data.getNur());
             recetaJson.put(TOKEN, data.getToken());
 
+            log.debug("JSON de consulta de receta enviado: {}", recetaJson);
+
             String clienteResponse = callmedApiService.valReceta(recetaJson.toString());
-            RecetaCallmed recetaCallmed =  objectMapper.readValue(clienteResponse, RecetaCallmed.class);
+            log.info("Respuesta recibida de la consulta de receta ::: {}", clienteResponse);
+
+            RecetaCallmed recetaCallmed = objectMapper.readValue(clienteResponse, RecetaCallmed.class);
 
             if (!recetaCallmed.isSuccess()) {
                 String message = recetaCallmed.getMessage() + SEPARATOR + NUR + data.getNur();
+                log.warn("Consulta de receta no exitosa para NUR: {} - Mensaje: {}", data.getNur(), recetaCallmed.getMessage());
                 throw new CallmedException(message, 404);
             }
 
             data.setRecetaCallmed(recetaCallmed);
 
-            log.info(String.format("%s %s :: Receta obtenida y procesada con éxito.", NUR, data.getNur()));
-        }
-        catch (CallmedException e)
-        {
+            log.info("{} {} :: Receta obtenida y procesada con éxito.", NUR, data.getNur());
+        } catch (CallmedException e) {
+            log.error("CallmedException capturada durante la consulta de receta para NUR: {} - Error: {}", data.getNur(), e.getMessage(), e);
             throw e;
-        }
-        catch (Exception e)
-        {
-            log.error(String.format("%s %s :: RECETA NO ENCONTRADA EN CALLMED: %s", NUR, data.getNur(), recetaJson));
+        } catch (Exception e) {
+            log.error("{} {} :: RECETA NO ENCONTRADA EN CALLMED: {} - Error: {}", NUR, data.getNur(), recetaJson, e.getMessage(), e);
             ExceptionHelper.handleException(data.getNur(), e);
         }
     }
 
     public void consultaMedicamentos(DataRequest data) throws CallmedException {
-
         JSONObject medicamentosJson = new JSONObject();
 
-        try
-        {
+        try {
+            log.info("Iniciando consulta de medicamentos Callmed");
+
             medicamentosJson.put("ClaveCliente", data.getClaveCliente().getClaveCliente());
             medicamentosJson.put(FOLIO, data.getNur());
             medicamentosJson.put(TOKEN, data.getToken());
 
+            log.debug("JSON de consulta de medicamentos enviado: {}", medicamentosJson);
+
             String clienteResponse = callmedApiService.valMedicamento(medicamentosJson.toString());
-            MedicamentosApi medicamentosApi =  objectMapper.readValue(clienteResponse, MedicamentosApi.class);
+            log.info("Respuesta recibida de la consulta de medicamentos ::: {}", clienteResponse);
+
+            MedicamentosApi medicamentosApi = objectMapper.readValue(clienteResponse, MedicamentosApi.class);
 
             if (!medicamentosApi.isSuccess()) {
                 String message = medicamentosApi.getMessage() + SEPARATOR + NUR + data.getNur();
+                log.warn("Consulta de medicamentos no exitosa para NUR: {} - Mensaje: {}", data.getNur(), medicamentosApi.getMessage());
                 throw new CallmedException(message, 404);
             }
 
             data.setMedicamentos(medicamentosApi);
 
-            log.info(String.format("%s %s :: Medicamentos obtenidos y procesados con éxito.", NUR, data.getNur()));
-        }
-        catch (CallmedException e)
-        {
+            log.info("{} {} :: Medicamentos obtenidos y procesados con éxito.", NUR, data.getNur());
+        } catch (CallmedException e) {
+            log.error("CallmedException capturada durante la consulta de medicamentos para NUR: {} - Error: {}", data.getNur(), e.getMessage(), e);
             throw e;
-        }
-        catch (Exception e)
-        {
-            log.error(String.format("%s %s :: MEDICAMENTOS NO ENCONTRADOS EN CALLMED: %s", NUR, data.getNur(), medicamentosJson));
+        } catch (Exception e) {
+            log.error("{} {} :: MEDICAMENTOS NO ENCONTRADOS EN CALLMED: {} - Error: {}", NUR, data.getNur(), medicamentosJson, e.getMessage(), e);
             ExceptionHelper.handleException(data.getNur(), e);
         }
     }
+
 }

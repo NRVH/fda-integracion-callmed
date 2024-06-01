@@ -9,7 +9,24 @@ public class RequestSurtirRecetaNur
     private Integer numeroCajero;
     private Integer numSubCliente;
     private Integer numCliente;
+    private String medico;
+    private String medicoCedula;
 
+    public String getMedico() {
+        return medico;
+    }
+
+    public void setMedico(String medico) {
+        this.medico = medico;
+    }
+
+    public String getMedicoCedula() {
+        return medicoCedula;
+    }
+
+    public void setMedicoCedula(String medicoCedula) {
+        this.medicoCedula = medicoCedula;
+    }
 
     public Integer getNumeroSucursal() {
         return numeroSucursal;
