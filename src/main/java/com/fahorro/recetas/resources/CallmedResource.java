@@ -145,6 +145,6 @@ public class CallmedResource {
         return Response.status(Response.Status.OK).entity(new ErrorResponse(
                 true,
                 200,
-                "fda integracion callmed version 1.0.0 is available!")).build();
+                "Fahorro recetas version 1.0.0 is available!")).build();
     }
 }

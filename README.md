@@ -1,4 +1,4 @@
-# Servicio de integración Callmed
+# Servicio de Fahorro Recetas
 
 Este proyecto integra servicios de la API de Callmed para el manejo y 
 consulta de recetas médicas.
@@ -11,10 +11,10 @@ La aplicación está configurada para correr sobre Quarkus y utiliza varias exte
 ```properties
 quarkus.http.port=8081
 
-quarkus.swagger-ui.path=/api-integracion-callmed
+quarkus.swagger-ui.path=/api-fahorro-recetas
 quarkus.swagger-ui.always-include=true
 quarkus.swagger-ui.enable=true
-quarkus.swagger-ui.title=api-integracion-callmed
+quarkus.swagger-ui.title=api-fahorro-recetas
 quarkus.swagger-ui.description=API Documentation
 
 quarkus.smallrye-openapi.enable=true
@@ -140,7 +140,7 @@ para este servicio no es necesario enviar algun dato, contesta solo al consultar
 
 ```json
 {
-  "message": "fda integracion callmed version 1.0.0 is available!",
+  "message": "fahorro version 1.0.0 is available!",
   "status": 200,
   "success": true
 }
