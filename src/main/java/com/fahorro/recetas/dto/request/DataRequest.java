@@ -9,6 +9,7 @@ public class DataRequest
     private String codigoSucursal;
     private String token;
     private String idConvenio;
+    private RequestSurtirRecetaNur recetaNur;
     private ClaveCliente claveCliente;
     private RecetaCallmed recetaCallmed;
     private MedicamentosApi medicamentosApi;
@@ -17,6 +18,14 @@ public class DataRequest
     private SubClienteApiResponseDTO subClienteEntidad;
     private ProductoApiResponseDTO productoEntidad;
     private SucursalApiResponseDTO sucursalEntidad;
+
+    public RequestSurtirRecetaNur getRecetaNur() {
+        return recetaNur;
+    }
+
+    public void setRecetaNur(RequestSurtirRecetaNur recetaNur) {
+        this.recetaNur = recetaNur;
+    }
 
     public SucursalApiResponseDTO getSucursalEntidad() {
         return sucursalEntidad;

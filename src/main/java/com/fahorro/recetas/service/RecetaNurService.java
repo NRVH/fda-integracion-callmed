@@ -102,12 +102,13 @@ public class RecetaNurService
 
     public String processSurtirRecetaNur(RequestSurtirRecetaNur recetaNur) throws Exception {
         log.info("Iniciando el proceso de surtir receta NUR para receta: {}", recetaNur);
+        data.setRecetaNur(recetaNur);
 
         String idReceta;
 
         try
         {
-            idReceta = recetaNurSurtirHelper.recetaNurSurtirProcess(data, recetaNur);
+            idReceta = recetaNurSurtirHelper.recetaNurSurtirProcess(data);
             log.info("Receta NUR procesada con éxito, OrderId generado: {}", idReceta);
         }
         catch (Exception e)
@@ -139,13 +140,14 @@ public class RecetaNurService
     public String processSurtirRecetaNurNumeroCliente(RequestSurtirRecetaNur recetaNur) throws Exception {
 
         log.info("Iniciando el procesamiento de Surtir Receta NUR Numero Cliente");
+        data.setRecetaNur(recetaNur);
 
         validateEssentialFields(recetaNur);
 
         String idReceta;
         try
         {
-            idReceta = recetaNurSurtirHelper.recetaNurSurtirProcess(data, recetaNur);
+            idReceta = recetaNurSurtirHelper.recetaNurSurtirProcess(data);
             log.info("Receta NUR/Numero Cliente procesada con éxito, OrderId generado: {}", idReceta);
         } catch (Exception e)
         {

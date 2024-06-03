@@ -44,9 +44,9 @@ public class RecetaNurSurtirHelper {
     @RestClient
     RecetaApiService recetaApiService;
 
-    public String recetaNurSurtirProcess(DataRequest data, RequestSurtirRecetaNur recetaNur) throws Exception {
+    public String recetaNurSurtirProcess(DataRequest data) throws Exception {
 
-        String idCliente = recetaNur.getNumCliente().toString();
+        String idCliente = data.getRecetaNur().getNumCliente().toString();
 
         log.info("Se consultara cliente con numCliente ::: {}", idCliente);
 
@@ -64,7 +64,7 @@ public class RecetaNurSurtirHelper {
             throw new ExcepcionSucursalNoEncontrada("Convenio no encontrado con idCliente :" + convenio);
         }
 
-        SucursalApiResponseDTO sucursal = sucursalApiService.getSucursalById(recetaNur.getNumeroSucursal().toString());
+        SucursalApiResponseDTO sucursal = sucursalApiService.getSucursalById(data.getRecetaNur().getNumeroSucursal().toString());
 
 
         data.setClienteEntidad(cliente);

@@ -15,6 +15,8 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 import static com.fahorro.recetas.utils.Constants.*;
 import static com.fahorro.recetas.utils.Constants.NUR;
 
@@ -55,7 +57,7 @@ public class CallmedHelper {
             log.debug("Payload de token: {}", loginPayload);
 
             String tokenResponse = callmedApiService.login(loginPayload);
-            log.info("Token obtenido");
+            log.info("Token obtenido correctamente desde callmed");
 
             clienteJson.put(FOLIO, data.getNur());
             clienteJson.put(TOKEN, tokenResponse.replace("\"", ""));
@@ -66,19 +68,19 @@ public class CallmedHelper {
 
             ClaveCliente claveCliente = objectMapper.readValue(clienteResponse, ClaveCliente.class);
 
-            if (!claveCliente.isSuccess()) {
-                String message = claveCliente.getMessage() + SEPARATOR + NUR + data.getNur();
-                log.warn("Clave cliente no exitosa para NUR: {} - Mensaje: {}", data.getNur(), claveCliente.getMessage());
-                throw new CallmedException(message, 404);
-            }
+//            if (!claveCliente.isSuccess()) {
+//                String message = claveCliente.getMessage() + SEPARATOR + NUR + data.getNur();
+//                log.warn("Clave cliente no exitosa para NUR: {} - Mensaje: {}", data.getNur(), claveCliente.getMessage());
+//                throw new CallmedException(message, 404);
+//            }
 
             data.setClaveCliente(claveCliente);
             data.setToken(tokenResponse);
 
             log.info("{} {} :: Clave cliente obtenida y procesada con éxito.", NUR, data.getNur());
-        } catch (CallmedException e) {
-            log.error("CallmedException capturada para NUR: {} - Error: {}", data.getNur(), e.getMessage(), e);
-            throw e;
+//        } catch (CallmedException e) {
+//            log.error("CallmedException capturada para NUR: {} - Error: {}", data.getNur(), e.getMessage(), e);
+//            throw e;
         } catch (Exception e) {
             log.error("{} {} :: CLAVE CLIENTE NO ENCONTRADA EN CALLMED: {} - Error: {}", NUR, data.getNur(), clienteJson, e.getMessage(), e);
             ExceptionHelper.handleException(data.getNur(), e);
@@ -102,8 +104,8 @@ public class CallmedHelper {
 
             RecetaCallmed recetaCallmed = objectMapper.readValue(clienteResponse, RecetaCallmed.class);
 
-            if (!recetaCallmed.isSuccess()) {
-                String message = recetaCallmed.getMessage() + SEPARATOR + NUR + data.getNur();
+            if (!recetaCallmed.isSuccess() || Objects.isNull(recetaCallmed.getReceta())) {
+                String message = "Mensaje respuesta Callmed " + recetaCallmed.getMessage() + SEPARATOR + NUR + data.getNur();
                 log.warn("Consulta de receta no exitosa para NUR: {} - Mensaje: {}", data.getNur(), recetaCallmed.getMessage());
                 throw new CallmedException(message, 404);
             }
@@ -137,7 +139,7 @@ public class CallmedHelper {
 
             MedicamentosApi medicamentosApi = objectMapper.readValue(clienteResponse, MedicamentosApi.class);
 
-            if (!medicamentosApi.isSuccess()) {
+            if (!medicamentosApi.isSuccess() || Objects.isNull(medicamentosApi.getMedicamento())) {
                 String message = medicamentosApi.getMessage() + SEPARATOR + NUR + data.getNur();
                 log.warn("Consulta de medicamentos no exitosa para NUR: {} - Mensaje: {}", data.getNur(), medicamentosApi.getMessage());
                 throw new CallmedException(message, 404);

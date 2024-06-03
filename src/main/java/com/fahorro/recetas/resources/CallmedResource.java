@@ -40,7 +40,7 @@ public class CallmedResource {
             @APIResponse(responseCode = "503", description = "Servicio Api Callmed no disponible"),
             @APIResponse(responseCode = "504", description = "Timeout de comunicación con Api Callmed")
     })
-    public Response recetaNur(@PathParam("nur") String nur, @QueryParam("codigoSucursal") String codigoSucursal) {
+    public Response recetaNur(@PathParam("nur") String nur, @HeaderParam("codigoSucursal") String codigoSucursal) {
         try
         {
             return Response.ok().entity(recetaNurService.processRecetaNur(nur, codigoSucursal)).build();
